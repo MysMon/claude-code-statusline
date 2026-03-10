@@ -2,6 +2,8 @@
 
 Claude Code のターミナル下部に表示されるカスタムステータスラインです。セッション情報をリアルタイムで一覧表示します。
 
+![statusline preview](image/statusline-preview.png)
+
 ## 表示内容
 
 **1行目** — セッション情報
