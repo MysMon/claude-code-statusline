@@ -30,7 +30,6 @@ eval "$(echo "$input" | jq -r '
   @sh "TOTAL_IN_TOK=\(.context_window.total_input_tokens // 0)",
   @sh "TOTAL_OUT_TOK=\(.context_window.total_output_tokens // 0)",
   @sh "CACHE_READ=\(.context_window.current_usage.cache_read_input_tokens // 0)",
-  @sh "SESSION_ID=\(.session_id // "")",
   @sh "STYLE=\(.output_style.name // "")",
   @sh "AGENT=\(.agent.name // "")",
   @sh "WT_NAME=\(.worktree.name // "")",
@@ -116,10 +115,6 @@ else
   RC="$G"
 fi
 
-# Session ID (first 8 chars)
-SESSION_SHORT=""
-[ -n "$SESSION_ID" ] && SESSION_SHORT="${SESSION_ID:0:8}"
-
 # Effort/style badge
 EFFORT=""
 if [ -n "$STYLE" ] && [ "$STYLE" != "default" ]; then
@@ -156,11 +151,6 @@ LINE1="${C}❮${X} ${CH}${MODEL}${X}"
 [ -n "$VIM_MODE" ] && LINE1="${LINE1} ${D}${VIM_MODE}${X}"
 [ -n "$EFFORT" ] && LINE1="${LINE1} ${D}[${EFFORT}]${X}"
 LINE1="${LINE1} ${C}❯${X}"
-
-# Session name / ID (show if width allows)
-if [ "$COLS" -ge 80 ] && [ -n "$SESSION_SHORT" ]; then
-  LINE1="${LINE1} ${D}${SESSION_SHORT}${X}"
-fi
 
 # Directory
 if [ "$COLS" -ge 60 ]; then
